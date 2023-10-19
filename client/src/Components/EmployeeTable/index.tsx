@@ -36,7 +36,7 @@ const EmployeeTable: React.FC = () => {
                 <td>{employee?.firstName}</td>
                 <td>{employee?.lastName}</td>
                 <td>{employee?.salutation}</td>
-                <td>{employee?.profileColor}</td>
+                <td>{employee?.colour}</td>
               </tr>
             );
           })

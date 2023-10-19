@@ -5,9 +5,10 @@ interface Employee {
   firstName: string;
   lastName: string;
   salutation: string;
-  profileColor: string;
+  colour: string;
   gender: string;
-  grossSalary: number;
+  fullName: string;
+  salary: number;
 }
 
 interface FetchResponse<T>{
@@ -16,7 +17,7 @@ interface FetchResponse<T>{
 }
 export const employeeApi = createApi({
   reducerPath: "employeeApi",
-  baseQuery: fetchBaseQuery({baseUrl: "http://server-api:3000"}),
+  baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3000"}),
   endpoints: (builder) => ({
     getEmployees: builder.query<FetchResponse<Employee[]>, void>({
       query: () => "user",
