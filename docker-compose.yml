@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  server-api:
+    build:
+      context: ./server-api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./server-api/.env
+    depends_on:
+      - db
+      - db-migrations
+    networks:
+      - app-network
+
+  db:
+    image: postgres:14.3-alpine
+    env_file:
+      - ./server-api/.env
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=prisma
+      - POSTGRES_DB=peanut-user
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  db-migrations:
+    platform: linux/amd64
+    depends_on:
+      - db
+    build:
+      context: ./server-api
+      dockerfile: Dockerfile.migrate
+    environment:
+      - DATABASE_URL=postgresql://user:prisma@db:5432/peanut-user?schema=public
+    networks:
+      - app-network
+    volumes:
+      - ./:/usr/src/app
+volumes:
+  pgdata:
+networks:
+  app-network:
+    driver: bridge

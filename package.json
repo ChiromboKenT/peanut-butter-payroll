@@ -1,0 +1,23 @@
+{
+  "name": "peanut-butter-payroll",
+  "version": "1.0.0",
+  "description": "Assessment for payroll system ",
+  "main": "index.js",
+  "scripts": {
+    "precommit": "lerna run  --concurrency 1  --stream precommit --since HEAD --exclude-dependents",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lerna": "^7.4.0"
+  },
+  "dependencies": {}
+}
