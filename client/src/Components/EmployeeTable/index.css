@@ -1,0 +1,20 @@
+table.unstyledTable {
+  border: 1px solid #000000;
+  width: 100%;
+  padding: 3rem
+}
+table.unstyledTable td, table.unstyledTable th {
+  border: 3px solid #AAAAAA;
+}
+table.unstyledTable tr:nth-child(even) {
+  background: #6da0cc;
+}
+table.unstyledTable thead {
+  background: #DDDDDD;
+}
+table.unstyledTable thead th {
+  font-weight: normal;
+}
+table.unstyledTable tfoot {
+  font-weight: bold;
+}

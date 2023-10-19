@@ -18,7 +18,36 @@ export const employeeApi = createApi({
     getEmployees: builder.query<Employee[], void>({
       query: () => "user",
     }),
+    getEmployeeById: builder.query<Employee, number>({
+      query: (employeeId) => `user/${employeeId}`,
+    }),
+    createUser: builder.mutation<Employee, Partial<Employee>>({
+      query: (newUser) => ({
+        url: `user/${newUser.employeeNumber}`,
+        method: "POST",
+        body: newUser,
+      }),
+    }),
+    updateUser: builder.mutation<Employee, {employeeId: number; user: Partial<Employee>}>({
+      query: ({employeeId, user}) => ({
+        url: `user/${employeeId}`,
+        method: "PUT",
+        body: user,
+      }),
+    }),
+    deleteUser: builder.mutation<void, number>({
+      query: (employeeId) => ({
+        url: `user/${employeeId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const {useGetEmployeesQuery} = employeeApi;
+export const {
+  useGetEmployeesQuery,
+  useGetEmployeeByIdQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = employeeApi;
