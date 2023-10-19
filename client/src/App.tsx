@@ -1,11 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import EmployeeTable from "./Components/EmployeeTable";
+import EmployeeForm from "./Components/EmployeeForm";
 
 function App() {
   return (
     <div className="App">
-
+      <EmployeeTable />
+      <EmployeeForm />
     </div>
   );
 }
