@@ -13,7 +13,7 @@ const EmployeeForm: React.FC = () => {
   return (
     <div className="container">
       <div className="header">
-        <h1 className="heading">Current Employees</h1>
+        <h1 className="heading">Employee Information</h1>
         <div style={{margin: "2rem"}}>
           <button className="heading-button">Cancel</button>
           <button className="heading-button">Save</button>
