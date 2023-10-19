@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="_blank">Angular</a>.
+A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.
 </p>
 
 <p align="center">
