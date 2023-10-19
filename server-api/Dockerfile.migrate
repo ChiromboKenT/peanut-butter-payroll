@@ -16,4 +16,4 @@ FROM base AS deps
 RUN npm install prisma
 
 
-CMD sleep 10 && npm run migrate:prepare && sleep 10 && npm run migrate
+CMD sleep 10 && npm run migrate

@@ -2,10 +2,11 @@ import React from "react";
 import {useGetEmployeesQuery} from "../../features/employee/employeeApi";
 import './index.css'
 const EmployeeTable: React.FC = () => {
-  const {data: employees, error, isLoading} = useGetEmployeesQuery();
+  const {data : response, error, isLoading} = useGetEmployeesQuery();
 
   if (isLoading) return <p>Loading...</p>;
-  //   if (error) return <p>Error occurred</p>;
+
+
 
   return (
     <table className="unstyledTable">
@@ -19,7 +20,28 @@ const EmployeeTable: React.FC = () => {
         </tr>
       </thead>
 
-      <tbody></tbody>
+      <tbody>
+        {error || !Array.isArray(response?.data) ? (
+          <tr>
+            {" "}
+            <td colSpan={5} style={{textAlign: "center"}}>
+              No Data
+            </td>
+          </tr>
+        ) : (
+          response?.data.map((employee, id) => {
+            return (
+              <tr key={`emp-${id}`}>
+                <td>{employee?.employeeNumber}</td>
+                <td>{employee?.firstName}</td>
+                <td>{employee?.lastName}</td>
+                <td>{employee?.salutation}</td>
+                <td>{employee?.profileColor}</td>
+              </tr>
+            );
+          })
+        )}
+      </tbody>
     </table>
   );
 };

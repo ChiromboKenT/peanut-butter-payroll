@@ -28,10 +28,10 @@ export class UserController {
     });
   }
 
-  @Get(':id')
+  @Get(':employeeNumber')
   @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id') id: string, @Res() res: Response): Promise<void> {
-    const user = await this.userService.getUser(parseInt(id));
+  async findOne(@Param('employeeNumber') employeeNumber: string, @Res() res: Response): Promise<void> {
+    const user = await this.userService.getUser(BigInt(employeeNumber));
     if (user) {
       res.status(HttpStatus.OK).json({
         data: user,
@@ -44,14 +44,13 @@ export class UserController {
     }
   }
 
-  @Post(':id')
+  @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Param('id') id: string,
     @Body() user: User,
     @Res() res: Response,
   ): Promise<void> {
-    const createdUser = await this.userService.addUser(parseInt(id), user);
+    const createdUser = await this.userService.addUser(user);
     if (createdUser) {
       res.status(HttpStatus.CREATED).json({
         data: createdUser,
@@ -64,14 +63,14 @@ export class UserController {
     }
   }
 
-  @Put(':id')
+  @Put(':employeeNumber')
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param('id') id: string,
+    @Param('employeeNumber') employeeNumber: string,
     @Body() user: User,
     @Res() res: Response,
   ): Promise<void> {
-    const updatedUser = await this.userService.addUser(parseInt(id), user);
+    const updatedUser = await this.userService.updateUser(BigInt(employeeNumber), user);
     if (updatedUser) {
       res.status(HttpStatus.OK).json({
         data: updatedUser,
@@ -84,10 +83,10 @@ export class UserController {
     }
   }
 
-  @Delete(':id')
+  @Delete(':employeeNumber')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: string, @Res() res: Response): Promise<void> {
-    await this.userService.deleteUser(parseInt(id));
+  async delete(@Param('employeeNumber') employeeNumber: string, @Res() res: Response): Promise<void> {
+    await this.userService.deleteUser(BigInt(employeeNumber));
     res.status(HttpStatus.NO_CONTENT).send();
   }
 }

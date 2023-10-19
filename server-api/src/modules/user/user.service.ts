@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { User } from './user';
 import { LoggerService } from '../../libs/logger/logger.service';
 import { DbManagerService } from 'src/libs/db-manager/db-manager.service';
+import JSONbig from 'json-bigint';
 
 @Injectable()
 export class UserService {
@@ -22,21 +23,31 @@ export class UserService {
     }
   }
 
-  async getUser(id: number): Promise<User | null> {
+  async getUser(employeeNumber: BigInt): Promise<User | null> {
     try {
-      this.logger.log(`Fetching user with ID: ${id}`);
-      const user = await this.db.find<User>(id);
+      this.logger.log(`Fetching user with ID: ${JSONbig.stringify(employeeNumber)}`);
+      const user = await this.db.find<User>(employeeNumber);
       return user as User;
     } catch (error) {
-      this.logger.error(`Error fetching user with ID: ${id}`, error);
+      this.logger.error(`Error fetching user with ID: ${JSONbig.stringify(employeeNumber)}`, error);
       throw error;
     }
   }
 
-  async addUser(id: number, user: Partial<User>): Promise<boolean> {
+  async addUser( user: Partial<User>): Promise<boolean> {
     try {
       this.logger.log(`Adding user: ${user}`);
-      const newUser = await this.db.upsert(id, user);
+      const newUser = await this.db.upsert(user?.employeeNumber, user);
+      return newUser;
+    } catch (error) {
+      this.logger.error('Error adding user', error);
+      throw error;
+    }
+  }
+  async updateUser(employeeNumber: BigInt, user: Partial<User>): Promise<boolean> {
+    try {
+      this.logger.log(`Adding user: ${user}`);
+      const newUser = await this.db.upsert(employeeNumber, user);
       return newUser;
     } catch (error) {
       this.logger.error('Error adding user', error);
@@ -44,13 +55,13 @@ export class UserService {
     }
   }
 
-  async deleteUser(id: number): Promise<boolean> {
+  async deleteUser(employeeNumber: BigInt): Promise<boolean> {
     try {
-      this.logger.log(`Deleting user with ID: ${id}`);
-      const isDeleted = await this.db.delete(id);
+      this.logger.log(`Deleting user with ID: ${JSONbig.stringify(employeeNumber)}`);
+      const isDeleted = await this.db.delete(employeeNumber);
       return isDeleted;
     } catch (error) {
-      this.logger.error(`Error deleting user with ID: ${id}`, error);
+      this.logger.error(`Error deleting user with ID: ${JSONbig.stringify(employeeNumber)}`, error);
       throw error;
     }
   }

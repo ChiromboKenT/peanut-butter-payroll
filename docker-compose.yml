@@ -12,6 +12,16 @@ services:
       - db-migrations
     networks:
       - app-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    networks:
+      - app-network
+    depends_on:
+      - server-api
 
   db:
     image: postgres:14.3-alpine

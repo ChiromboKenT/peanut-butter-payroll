@@ -11,26 +11,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
-}
 
-enum Salutation {
-  DR
-  MR
-  Ms
-  Mrs
-  Mx
-}
 
 model User {
   id             Int       @id @default(autoincrement())
   firstName      String
   lastName       String
-  salutation     Salutation
-  gender         Gender
+  salutation     String
+  gender         String
   employeeNumber BigInt       @unique
   salary         BigInt
   colour         String

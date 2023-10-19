@@ -18,10 +18,10 @@ export class DbManagerService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async upsert(id: number, body: any): Promise<boolean> {
+  async upsert(employeeNumber: BigInt, body: any): Promise<boolean> {
     try {
       await this.user.upsert({
-        where: { id },
+        where: { employeeNumber: employeeNumber as bigint },
         update: { ...body },
         create: { ...body },
       });
@@ -34,9 +34,9 @@ export class DbManagerService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async find<T>(id: number): Promise<T | undefined> {
+  async find<T>(employeeNumber: BigInt): Promise<T | undefined> {
     try {
-      if (!id) {
+      if (!employeeNumber) {
         this.logger.debug(
           'Error with retrieve one database call',
           'ID can not be null',
@@ -45,7 +45,7 @@ export class DbManagerService extends PrismaClient implements OnModuleInit {
       }
 
       const result = await this.user.findFirst({
-        where: { id },
+        where: { employeeNumber: employeeNumber as bigint },
       });
       if (!result) return;
       return result as unknown as T;
@@ -70,11 +70,11 @@ export class DbManagerService extends PrismaClient implements OnModuleInit {
       return undefined;
     }
   }
-  async delete(id: number): Promise<boolean> {
+  async delete(employeeNumber: BigInt): Promise<boolean> {
     try {
       await this.user.delete({
         where: {
-          id,
+          employeeNumber: employeeNumber as bigint,
         },
       });
 

@@ -7,18 +7,21 @@ interface Employee {
   salutation: string;
   profileColor: string;
   gender: string;
-  fullName: string;
   grossSalary: number;
 }
 
+interface FetchResponse<T>{
+  data: T;
+  message : string
+}
 export const employeeApi = createApi({
   reducerPath: "employeeApi",
-  baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3000"}),
+  baseQuery: fetchBaseQuery({baseUrl: "http://server-api:3000"}),
   endpoints: (builder) => ({
-    getEmployees: builder.query<Employee[], void>({
+    getEmployees: builder.query<FetchResponse<Employee[]>, void>({
       query: () => "user",
     }),
-    getEmployeeById: builder.query<Employee, number>({
+    getEmployeeById: builder.query<FetchResponse<Employee>, number>({
       query: (employeeId) => `user/${employeeId}`,
     }),
     createUser: builder.mutation<Employee, Partial<Employee>>({
@@ -28,7 +31,10 @@ export const employeeApi = createApi({
         body: newUser,
       }),
     }),
-    updateUser: builder.mutation<Employee, {employeeId: number; user: Partial<Employee>}>({
+    updateUser: builder.mutation<
+      Employee,
+      {employeeId: number; user: Partial<Employee>}
+    >({
       query: ({employeeId, user}) => ({
         url: `user/${employeeId}`,
         method: "PUT",
