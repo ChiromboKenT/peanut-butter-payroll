@@ -14,8 +14,8 @@ This is a comprehensive guide on how to set up and run the client and server-api
 ## Installation
 
 ```bash
-$ git clone <repository-url>
-$ cd <repository-directory>
+$ git clone [<repository-url>](https://github.com/ChiromboKenT/peanut-butter-payroll.git)
+$ cd peanut-butter-payroll
 ```
 
 ## Running the app with Docker
