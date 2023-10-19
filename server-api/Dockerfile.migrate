@@ -1,0 +1,19 @@
+# ---- Base Node ----
+FROM node:18-alpine AS base
+
+WORKDIR /app
+COPY --chown=node:node . .
+
+RUN apk update && \
+    apk upgrade && \
+    apk add --update libc6-compat openssl openssl-dev
+
+COPY package*.json ./
+COPY ./prisma prisma
+
+# deps
+FROM base AS deps
+RUN npm install prisma
+
+
+CMD sleep 10 && npm run migrate:prepare && sleep 10 && npm run migrate
